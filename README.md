@@ -107,10 +107,11 @@ end
 ```
 
 <hr/>
-- added 
+
+- added JsonWebToken
 
 ```
-gem 'jwt' 
+- gem 'jwt' 
 ```
 to implement token generation using lib/json_web_token.rb
 ```
@@ -133,3 +134,48 @@ end
 ```
 
 <hr/>
+
+configure config/application.rb to pre-load lib files
+
+```
+config.autoload_paths << Rails.root.join('lib')
+```
+<hr/>
+
+- added simplecommand
+
+```
+gem 'simple_command'
+```
+
+- and create commands
+  
+<hr/>
+
+- add command files
+- for Authenticating Users
+  
+  app/commands/authenticate_user.rb
+
+- for Checking User Authorization
+  
+  app/commands/authorize_api_request.rb
+<hr/>
+
+- in 
+
+```
+class ApplicationController < ActionController::API
+  before_action :authenticate_request
+
+  attr_reader :current_user
+
+  private
+
+  def authenticate_request
+    @current_user = AuthorizeApiRequest.call(request.headers).result
+    render json: { error: 'Not Authorized' }, status: 401 unless @current_user
+  end
+
+end
+```

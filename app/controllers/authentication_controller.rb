@@ -17,17 +17,11 @@ class AuthenticationController < ApplicationController
 
   private
 
-  def invited_users_registered(user)
-    invited_users = []
-    user.invited_users.each { |u| invited_users << { name: u.name, email: u.email } }
-    invited_users
-  end
-
   def authentication_results
     user = User.find_by_email(@email)
     if user
       referral = user.referral.code if user.referral
-      registrations = invited_users_registered(user)
+      registrations = user.invited_users_list
       creditfromreferral = "$#{(registrations.length / 5) * 10}"
       inviter = user.inviter
       invitername = inviter.name if inviter

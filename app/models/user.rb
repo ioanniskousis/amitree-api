@@ -23,4 +23,10 @@ class User < ApplicationRecord
           through: :inverse_referenced_registration,
           foreign_key: 'referer_id',
           source: :referer
+
+  def invited_users_list
+    users = []
+    users.each { |u| users << { name: u.name, email: u.email } }
+    users
+  end
 end

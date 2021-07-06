@@ -11,8 +11,8 @@ class ReferralsController < ApplicationController
 
   def user_has_referral_code
     if Referral.where(user_id: @current_user.id).exists?
-      render json: {constrain: 'You Already Have Created A Referral Code'}
-      return true 
+      render json: { constrain: 'You Already Have Created A Referral Code' }
+      return true
     end
     false
   end
@@ -24,5 +24,4 @@ class ReferralsController < ApplicationController
       break code unless Referral.where(code: code).exists?
     end
   end
-
 end

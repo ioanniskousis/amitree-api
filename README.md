@@ -190,3 +190,16 @@ create_table :referrals do |t|
 
 end
 ```
+
+- create ReferencedRegistrations model
+```
+rails g model ReferencedRegistration user:references user:references
+
+def change
+  create_table :referenced_registrations do |t|
+    t.references :referer, class: :user, null: false, foreign_key: {to_table: :users}
+    t.references :user, null: false, foreign_key: true
+
+  end
+end
+```

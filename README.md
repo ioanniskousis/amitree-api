@@ -206,3 +206,7 @@ end
 
 - ReferralsController controller
   
+## run tests using
+```
+rspec --format documentation
+```

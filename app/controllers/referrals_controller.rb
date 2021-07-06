@@ -1,13 +1,4 @@
 class ReferralsController < ApplicationController
-
-  def show
-    if @current_user.referral
-      render json: { referral_code: @current_user.referral.code}
-    else
-      render json: { referral_code: 'no referral code created'}
-    end
-  end
-
   def create
     return if user_has_referral_code
 

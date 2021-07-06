@@ -7,7 +7,6 @@ ruby '3.0.1'
 gem 'rails', '~> 6.1.4'
 
 # Use postgresql as the database for Active Record
-# gem 'pg', '~> 1.1'
 group :development, :test do
   gem 'sqlite3', '~> 1.4'
 end

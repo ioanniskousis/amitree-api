@@ -10,7 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_05_182241) do
+ActiveRecord::Schema.define(version: 2021_07_06_061508) do
+
+  create_table "referrals", force: :cascade do |t|
+    t.string "code", null: false
+    t.integer "user_id", null: false
+    t.index ["code"], name: "index_referrals_on_code", unique: true
+    t.index ["user_id"], name: "index_referrals_on_user_id", unique: true
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "name", null: false

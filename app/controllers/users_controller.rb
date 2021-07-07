@@ -87,14 +87,14 @@ class UsersController < ApplicationController
   end
 
   def registration_results
-    invitername = @inviter.name if @inviter
-    creditfromsignup = @inviter.nil? ? '$0' : '$10'
+    inviter_name = @inviter.name if @inviter
+    credit_from_signup = @inviter.nil? ? '$0' : '$10'
 
     {
       auth_token: @auth_token,
-      username: @user.name,
-      invitername: invitername,
-      creditfromsignup: creditfromsignup
+      user_name: @user.name,
+      inviter_name: inviter_name,
+      credit_from_signup: credit_from_signup
     }
   end
 end

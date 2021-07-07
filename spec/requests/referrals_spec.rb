@@ -38,6 +38,6 @@ describe 'Referral Creation', type: :request do
     end
 
     post '/authenticate', params: { email: 'example@gmail.com', password: 'example' }
-    expect(JSON.parse(response.body)['creditfromreferral']).to eq('$20')
+    expect(JSON.parse(response.body)['credit_from_referral']).to eq('$20')
   end
 end

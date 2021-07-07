@@ -107,7 +107,7 @@ describe 'User Registration', type: :request do
       referral_code: referral_code
     }
 
-    expect(JSON.parse(response.body)['creditfromsignup']).to eq('$10')
+    expect(JSON.parse(response.body)['credit_from_signup']).to eq('$10')
   end
 
   it 'Blocks registration of user with invalid referral code' do

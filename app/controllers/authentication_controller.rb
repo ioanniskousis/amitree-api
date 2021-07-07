@@ -18,19 +18,19 @@ class AuthenticationController < ApplicationController
     if user
       referral = user.referral.code if user.referral
       registrations = user.invited_users_list
-      creditfromreferral = user.credit_from_referral
+      credit_from_referral = user.credit_from_referral
       inviter = user.inviter
-      invitername = inviter.name if inviter
-      creditfromsignup = '$10' if inviter
+      inviter_name = inviter.name if inviter
+      credit_from_signup = '$10' if inviter
     end
     {
       auth_token: @command.result,
-      username: user.name,
-      invitername: invitername,
+      user_name: user.name,
+      inviter_name: inviter_name,
       referral: referral,
       invited_users: registrations,
-      creditfromreferral: creditfromreferral,
-      creditfromsignup: creditfromsignup
+      credit_from_referral: credit_from_referral,
+      credit_from_signup: credit_from_signup
     }
   end
 end

@@ -280,13 +280,17 @@ headers: {
 The response can be:
 1. either a JSON structure:
 <br/>
+
 ```
 {
   auth_token: auth_token
 }
 ```
+
 <br/>
+
 #### 2. Or a message
+
 ```
 {
   error: 'Not Authorized'
@@ -301,7 +305,8 @@ The response can be:
 <hr/>
 
 ## Deployment
-Thye API has been deployed on heroku at this address
+The API has been deployed on heroku at this address
+
 ```
 https://boiling-fjord-82978.herokuapp.com
 ```

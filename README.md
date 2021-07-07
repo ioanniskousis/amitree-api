@@ -25,8 +25,6 @@
 [![Issues][issues-shield]][issues-url]
 
 <hr/>
-<br/>
-<br/>
 
 <!-- TABLE OF CONTENTS -->
 

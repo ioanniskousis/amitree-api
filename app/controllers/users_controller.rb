@@ -1,8 +1,6 @@
 class UsersController < ApplicationController
   skip_before_action :authenticate_request, only: [:create]
 
-  attr_reader :command, :email, :password
-
   def create
     name = params['name']
     email = params['email']
@@ -50,12 +48,32 @@ class UsersController < ApplicationController
     true
   end
 
+  # the referral code does not exist
+  def invalid_referral(referral)
+    if referral.nil?
+      render json: { error: 'Invalid Referral Code' }
+      return true
+    end
+
+    false
+  end
+
+  # in case the inviter has been removed from users
+  def invalid_inviter(inviter)
+    if inviter.nil?
+      render json: { error: 'Invalid Referral Code' }
+      return true
+    end
+
+    false
+  end
+
   def email_exists(email)
-    user = User.find_by_email(email)
-    if user
+    if User.find_by_email(email)
       render json: { error: 'email is already registered' }
       return true
     end
+
     false
   end
 
@@ -64,23 +82,8 @@ class UsersController < ApplicationController
       render json: { error: 'password does not match password_confirmation' }
       return false
     end
+
     true
-  end
-
-  # the referral code does not exist
-  def invalid_referral(referral)
-    render json: { error: 'Invalid Referral Code' } if referral.nil?
-    return true if referral.nil?
-
-    false
-  end
-
-  # in case the inviter has been removed from users
-  def invalid_inviter(inviter)
-    render json: { error: 'Invalid Referral Code' } if inviter.nil?
-    return true if inviter.nil?
-
-    false
   end
 
   def registration_results

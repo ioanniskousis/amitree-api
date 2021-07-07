@@ -1,14 +1,10 @@
 class AuthenticationController < ApplicationController
   skip_before_action :authenticate_request
 
-  attr_reader :command, :email, :password
-
   def authenticate
-    @email = params[:email]
-    @password = params[:password]
-    @command = AuthenticateUser.call(@email, @password)
+    @command = AuthenticateUser.call(params[:email], params[:password])
 
-    if command.success?
+    if @command.success?
       render json: authentication_results
     else
       render json: { error: @command.errors }, status: :unauthorized
@@ -18,15 +14,14 @@ class AuthenticationController < ApplicationController
   private
 
   def authentication_results
-    user = User.find_by_email(@email)
-    if user
-      referral = user.referral.code if user.referral
-      registrations = user.invited_users_list
-      creditfromreferral = "$#{(registrations.length / 5) * 10}"
-      inviter = user.inviter
-      invitername = inviter.name if inviter
-      creditfromsignup = '$10' if inviter
-    end
+    user = $current_user
+    referral = user.referral.code if user.referral
+    registrations = user.invited_users_list
+    creditfromreferral = user.credit_from_referral
+    inviter = user.inviter
+    invitername = inviter.name if inviter
+    creditfromsignup = '$10' if inviter
+
     {
       auth_token: @command.result,
       username: user.name,

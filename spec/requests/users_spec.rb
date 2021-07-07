@@ -108,7 +108,7 @@ describe 'User Registration', type: :request do
     User.create!(name: 'John', email: 'example@gmail.com', password: 'example')
     Referral.create(code: referral_code, user_id: User.first.id)
 
-    post '/register', params: {name: 'Paul', email: 'paul@gmail.com', password: 'paul', password_confirmation: 'paul', referral_code: 'wrong-referal-code'}
+    post '/register', params: {name: 'Paul', email: 'paul@gmail.com', password: 'paul', password_confirmation: 'paul', referral_code: 'invalid-referral-code'}
 
     expect(JSON.parse(response.body)['error']).to eq('Invalid Referral Code')
 

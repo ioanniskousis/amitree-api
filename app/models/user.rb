@@ -26,7 +26,11 @@ class User < ApplicationRecord
 
   def invited_users_list
     users = []
-    users.each { |u| users << { name: u.name, email: u.email } }
+    invited_users.each { |u| users << { name: u.name, email: u.email } }
     users
+  end
+
+  def credit_from_referral
+    "$#{(invited_users.length / 5) * 10}"
   end
 end

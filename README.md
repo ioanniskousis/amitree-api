@@ -329,8 +329,8 @@ In order to run the API locally,
 3. Automated tests are implemented that validate the functionality works as intended
 4. The solution is simple and well organized. No extra routes, models, controllers are implemented although a real app in production would require further features 
 5. The code is error-resistant and does consider reasonable edge-cases
-6. The API allows a capable front-end developer to build an application. A draft example is implemented and is hosted in github at address https://github.com/ioanniskousis/amitree-interact
-
+6. The API allows a capable front-end developer to build an application. A draft example is implemented and is hosted in github at address https://github.com/ioanniskousis/amitree-interact or 
+<a href="https://ioanniskousis.github.io/amitree-interact/">open the live demo from here</a>. Also can use a <a href="https://ioanniskousis.github.io/amitree-interact?referral_code=cce01187a4764b5f09ee">Sample With Referral Code</a>
 
 <br/>
 <hr/>

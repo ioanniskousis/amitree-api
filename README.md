@@ -277,13 +277,25 @@ headers: {
 
 <br/>
 
-The response JSON structure:
+The response can be:
+1. either a JSON structure:
 <br/>
 ```
 {
   auth_token: auth_token
 }
 ```
+<br/>
+#### 2. Or a message
+```
+{
+  error: 'Not Authorized'
+}
+```
+
+<br/>
+
+<br/>
 
 <br/>
 <hr/>
@@ -314,7 +326,7 @@ In order to run the API locally,
 3. Automated tests are implemented that validate the functionality works as intended
 4. The solution is simple and well organized. No extra routes, models, controllers are implemented although a real app in production would require further features 
 5. The code is error-resistant and does consider reasonable edge-cases
-6. The API allows a capable front-end developer to build an application. An draft example is implemented and is hosted in github at address https://github.com/ioanniskousis/amitree-interact
+6. The API allows a capable front-end developer to build an application. A draft example is implemented and is hosted in github at address https://github.com/ioanniskousis/amitree-interact
 
 
 <br/>
@@ -330,7 +342,6 @@ In order to run the API locally,
 ## Ioannis Kousis
 
 - Github: [@ioanniskousis](https://github.com/ioanniskousis)
-- Twitter: [@ioanniskousis](https://twitter.com/ioanniskousis)
 - Linkedin: [Ioannis Kousis](https://www.linkedin.com/in/jgkousis)
 - E-mail: jgkousis@gmail.com
 

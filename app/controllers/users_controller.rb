@@ -1,14 +1,6 @@
 class UsersController < ApplicationController
   skip_before_action :authenticate_request, only: [:create]
 
-  # attr_reader :command, :email, :password, :inviter
-
-  def index
-    users = []
-    User.all.each { |u| users << { name: u.name, email: u.email } }
-    render json: users
-  end
-
   def create
     name = params['name']
     email = params['email']

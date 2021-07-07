@@ -1,8 +1,6 @@
 class AuthenticateUser
   prepend SimpleCommand
 
-  attr_reader :user
-
   def initialize(email, password)
     @email = email
     @password = password
@@ -17,10 +15,8 @@ class AuthenticateUser
   attr_accessor :email, :password
 
   def user
-    $current_user = User.find_by_email(email)
-    # $current_user = @user
-    # return user if user&.authenticate(password)
-    return $current_user if $current_user && $current_user.authenticate(password)
+    user = User.find_by_email(email)
+    return user if user&.authenticate(password)
 
     errors.add :user_authentication, 'invalid credentials'
     nil

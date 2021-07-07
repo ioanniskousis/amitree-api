@@ -6,5 +6,4 @@ FactoryBot.define do
     # f.password "John"
     # f.password_confrimation "John"
   end
-
 end

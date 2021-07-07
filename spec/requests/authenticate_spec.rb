@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 describe 'User Authentication', type: :request do
-
   it 'Successful Authentication returns token' do
     User.create(name: 'John', email: 'example@gmail.com', password: 'example')
 
@@ -27,5 +26,4 @@ describe 'User Authentication', type: :request do
 
     expect(JSON.parse(response.body)['error']['user_authentication']).to eq('invalid credentials')
   end
-
 end

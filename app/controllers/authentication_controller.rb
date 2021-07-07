@@ -14,14 +14,15 @@ class AuthenticationController < ApplicationController
   private
 
   def authentication_results
-    user = $current_user
-    referral = user.referral.code if user.referral
-    registrations = user.invited_users_list
-    creditfromreferral = user.credit_from_referral
-    inviter = user.inviter
-    invitername = inviter.name if inviter
-    creditfromsignup = '$10' if inviter
-
+    user = User.find_by_email(params[:email])
+    if user
+      referral = user.referral.code if user.referral
+      registrations = user.invited_users_list
+      creditfromreferral = user.credit_from_referral
+      inviter = user.inviter
+      invitername = inviter.name if inviter
+      creditfromsignup = '$10' if inviter
+    end
     {
       auth_token: @command.result,
       username: user.name,

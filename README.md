@@ -134,7 +134,7 @@ The content of returned structure:
 
 A call to the *referral* route requires the authentication token to be supplied in the header structure of the request.  
 The user is authenticated and a 20 characters length string is generated and returned to the caller.  
-If the user has already created a referral code the a 'You Already Have Created A Referral Code' message is returned.  
+If the user has already created a referral code then a 'You Already Have Created A Referral Code' message is returned.  
 
 <br/>
 <hr/>
@@ -287,11 +287,15 @@ The response can be:
 
 <br/>
 
-#### 2. Or a message
+#### 2. Or one of these messages  
 
 ```
 {
   error: 'Not Authorized'
+}
+
+{
+  constrain: 'You Already Have Created A Referral Code' 
 }
 ```
 

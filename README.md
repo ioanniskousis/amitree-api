@@ -281,7 +281,7 @@ The response can be:
 
 ```
 {
-  auth_token: auth_token
+  referral_code: referral_code
 }
 ```
 

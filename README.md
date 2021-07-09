@@ -85,7 +85,7 @@ The following models were generated:
 - referral, to store the referral codes the users create
 - referenced_registrations, to link each user who signs up using a referral code with the creator of the code
 
-The following Controllers manage the calls the the API:
+The following Controllers manage the calls to the API:
 - UsersController manages the creation of new users
 - AuthenticationController manages the authenticaton of logged in users
 - ReferralsController manages the creation of new referral codes by users
@@ -117,7 +117,7 @@ The Token-based Authentication practice is implemented so the <span style="color
 
 The authentication token is created at the login procedure and is returned to the caller.  
 For this, a call to the *authenticate* route is required suppling data for email and password.  
-The data is passed to the JsonWebToken singleton class that validates and successfully creates the token to be supplied to the user. A failure of validating email or password causes the return of a 'Not Authorized' message.  
+The data is passed to the JsonWebToken singleton class that validates and successfully creates the token to be supplied to the user. A failure of validating email or password causes the return of a 'invalid credentials' message.  
 
 The return structure includes useful data to be used by the caller.
 The content of returned structure:

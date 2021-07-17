@@ -14,7 +14,7 @@ ActiveRecord::Schema.define(version: 2021_07_17_104144) do
 
   create_table "credits", force: :cascade do |t|
     t.integer "user_id", null: false
-    t.float "amount"
+    t.float "amount", default: 0.0
     t.index ["user_id"], name: "index_credits_on_user_id", unique: true
   end
 

@@ -17,18 +17,24 @@ class UsersController < ApplicationController
       password_confirmation: password_confirmation
     )
     if @user.save
-      @user.inviter = @inviter unless @inviter.nil?
-      @inviter.update_referenced_registrations unless @inviter.nil?
+      update_inviter
+      @user.create_credit(amount: 10) unless @inviter.nil?
 
-      command = AuthenticateUser.call(email, password)
-      @auth_token = command.result
-      render json: registration_results
+      render json: registration_results(email, password)
     else
       render json: { error: @user.errors }, status: :unprocessable_entity
     end
   end
 
   private
+
+  def update_inviter
+    return if @inviter.nil?
+
+    @user.inviter = @inviter
+    @inviter.create_credit if @inviter.credit.nil?
+    @inviter.update_credit
+  end
 
   def valid_params(email, password, password_confirmation, referral_code)
     return false unless referral_code_comply(referral_code)
@@ -88,12 +94,15 @@ class UsersController < ApplicationController
     true
   end
 
-  def registration_results
+  def registration_results(email, password)
+    command = AuthenticateUser.call(email, password)
+    auth_token = command.result
+
     inviter_name = @inviter.name if @inviter
     credit_from_signup = @inviter.nil? ? '$0' : '$10'
 
     {
-      auth_token: @auth_token,
+      auth_token: auth_token,
       user_name: @user.name,
       inviter_name: inviter_name,
       credit_from_signup: credit_from_signup

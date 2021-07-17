@@ -12,8 +12,11 @@ class User < ApplicationRecord
   has_many :referenced_registrations, foreign_key: 'referer_id', dependent: :destroy
   has_many :invited_users, class_name: 'User', through: :referenced_registrations, source: :user
 
-  #points to referenced_registrations that still do not have been checked to count for credit
-  has_many :unchecked_referenced_registrations, -> { unchecked }, class_name: 'ReferencedRegistration', foreign_key: 'referer_id'
+  # points to referenced_registrations that still do not have been checked to count for credit
+  has_many :unchecked_referenced_registrations,
+           -> { unchecked },
+           class_name: 'ReferencedRegistration',
+           foreign_key: 'referer_id'
 
   # added when registers as a new user with referral code
   has_one :inverse_referenced_registration,
@@ -39,9 +42,11 @@ class User < ApplicationRecord
     "$#{(invited_users.length / 5) * 10}"
   end
 
-  def update_referenced_registrations
-    if referenced_registrations.count > 4
+  def update_credit
+    return if unchecked_referenced_registrations.count < 5
 
-    end
+    credit.amount += 10
+    credit.save
+    referenced_registrations.update_all(checked: true)
   end
 end

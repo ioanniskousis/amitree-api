@@ -5,4 +5,6 @@ class ReferencedRegistration < ApplicationRecord
 
   belongs_to :user
   belongs_to :referer, class_name: 'User', foreign_key: 'referer_id'
+
+  scope :unchecked, -> { where(checked: false) }
 end

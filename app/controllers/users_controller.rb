@@ -18,6 +18,8 @@ class UsersController < ApplicationController
     )
     if @user.save
       @user.inviter = @inviter unless @inviter.nil?
+      @inviter.update_referenced_registrations unless @inviter.nil?
+
       command = AuthenticateUser.call(email, password)
       @auth_token = command.result
       render json: registration_results

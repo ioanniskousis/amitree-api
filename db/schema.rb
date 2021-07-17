@@ -10,11 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_06_062123) do
+ActiveRecord::Schema.define(version: 2021_07_17_062019) do
 
   create_table "referenced_registrations", force: :cascade do |t|
     t.integer "referer_id", null: false
     t.integer "user_id", null: false
+    t.boolean "checked", default: false
     t.index ["referer_id"], name: "index_referenced_registrations_on_referer_id"
     t.index ["user_id"], name: "index_referenced_registrations_on_user_id"
   end

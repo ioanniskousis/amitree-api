@@ -27,6 +27,8 @@ class User < ApplicationRecord
           foreign_key: 'referer_id',
           source: :referer
 
+  has_one :credit
+
   def invited_users_list
     users = []
     invited_users.each { |u| users << { name: u.name, email: u.email } }
@@ -39,7 +41,7 @@ class User < ApplicationRecord
 
   def update_referenced_registrations
     if referenced_registrations.count > 4
-      
+
     end
   end
 end

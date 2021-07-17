@@ -10,7 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_17_062019) do
+ActiveRecord::Schema.define(version: 2021_07_17_104144) do
+
+  create_table "credits", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.float "amount"
+    t.index ["user_id"], name: "index_credits_on_user_id", unique: true
+  end
 
   create_table "referenced_registrations", force: :cascade do |t|
     t.integer "referer_id", null: false
@@ -35,6 +41,7 @@ ActiveRecord::Schema.define(version: 2021_07_17_062019) do
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
+  add_foreign_key "credits", "users"
   add_foreign_key "referenced_registrations", "users"
   add_foreign_key "referenced_registrations", "users", column: "referer_id"
 end

@@ -324,7 +324,7 @@ The response can be:
 
 ### Users Index
 
-A GET request is required with header structure cntaining
+A GET request is required with header structure containing
 - Authorization
   
 Note that you have to prefix the authorization token with 'Bearer '  
@@ -365,7 +365,7 @@ The response can be:
 <br/>
 
 ### User's Info
-A GET request is required with header structure cntaining
+A GET request is required with header structure containing
 - Authorization
   
 Note that you have to prefix the authorization token with 'Bearer '  
@@ -390,7 +390,7 @@ The response can be:
   inviter: user_inviter,
   credit: user_credit,
   referral_code: user_referral&.code,
-  invited_users: array of the invated users
+  invited_users: array of the invited users
 }
 ```
 
@@ -413,9 +413,6 @@ Note that the invited_users is an array with each element containing:
 {
   error: 'Not Authorized'
 }
-
-<br/>
-
 ```
 <br/>
 

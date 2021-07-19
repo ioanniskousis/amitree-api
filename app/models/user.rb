@@ -38,15 +38,20 @@ class User < ApplicationRecord
     users
   end
 
-  def credit_from_referral
-    "$#{(invited_users.length / 5) * 10}"
-  end
-
   def update_credit
     return if unchecked_referenced_registrations.count < 5
 
     credit.amount += 10
     credit.save
     referenced_registrations.update_all(checked: true)
+  end
+
+  def authentication_results(auth_token)
+    {
+      auth_token: auth_token,
+      user_id: id,
+      user_name: name,
+      user_email: email
+    }
   end
 end

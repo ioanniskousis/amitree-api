@@ -1,5 +1,4 @@
 require 'rails_helper'
-# http://localhost:3000
 
 describe 'User Registration', type: :request do
   it 'Successful registration of user without referral code' do
@@ -107,7 +106,7 @@ describe 'User Registration', type: :request do
       referral_code: referral_code
     }
 
-    expect(JSON.parse(response.body)['credit_from_signup']).to eq('$10')
+    expect(User.last.credit.amount).to eq(10.0)
   end
 
   it 'Blocks registration of user with invalid referral code' do

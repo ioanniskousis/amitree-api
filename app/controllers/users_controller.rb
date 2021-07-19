@@ -1,6 +1,40 @@
 class UsersController < ApplicationController
   skip_before_action :authenticate_request, only: [:create]
 
+  def index
+    @users = User.all.map do |u|
+      {
+        id: u.id,
+        name: u.name,
+        email: u.email,
+        credit: (u.credit&.amount || 0),
+        inviter: u.inviter ? u.inviter.name : '',
+        referral_code: u.referral ? u.referral.code : ''
+      }
+    end
+    render json: @users
+  end
+
+  def show
+    @user = User.find(params[:id])
+    render json: {
+      id: @user.id,
+      name: @user.name,
+      email: @user.email,
+      inviter: @user.inviter ? { id: @user.inviter.id, name: @user.inviter.name } : nil,
+      credit: @user.credit ? @user.credit.amount : 0,
+      referral_code: @user.referral&.code,
+      invited_users: @user.invited_users.map do |u|
+        {
+          id: u.id,
+          name: u.name,
+          email: u.email,
+          credit: u.credit&.amount
+        }
+      end
+    }
+  end
+
   def create
     name = params['name']
     email = params['email']
@@ -20,7 +54,8 @@ class UsersController < ApplicationController
       update_inviter
       @user.create_credit(amount: 10) unless @inviter.nil?
 
-      render json: registration_results(email, password)
+      command = AuthenticateUser.call(email, password)
+      render json: @user.authentication_results(command.result)
     else
       render json: { error: @user.errors }, status: :unprocessable_entity
     end
@@ -92,20 +127,5 @@ class UsersController < ApplicationController
     end
 
     true
-  end
-
-  def registration_results(email, password)
-    command = AuthenticateUser.call(email, password)
-    auth_token = command.result
-
-    inviter_name = @inviter.name if @inviter
-    credit_from_signup = @inviter.nil? ? '$0' : '$10'
-
-    {
-      auth_token: auth_token,
-      user_name: @user.name,
-      inviter_name: inviter_name,
-      credit_from_signup: credit_from_signup
-    }
   end
 end

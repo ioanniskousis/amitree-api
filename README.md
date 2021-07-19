@@ -84,6 +84,7 @@ The following models were generated:
 - user, to store user's details
 - referral, to store the referral codes the users create
 - referenced_registrations, to link each user who signs up using a referral code with the creator of the code
+- credit, to track each user's credit
 
 The following Controllers manage the calls to the API:
 - UsersController manages the creation of new users
@@ -94,6 +95,8 @@ The following routes consist the interface:
 - post 'register' for the creation of a new user
 - post 'authenticate' for authenticating a user
 - post 'referral' for the creation of a referral code
+- get 'users' to retreive users' index
+- get 'user/:id' to retreive a user's info
 
 <br/>
 
@@ -101,11 +104,10 @@ The following routes consist the interface:
 
 A call to the *register* route supplied with data for name, email, password, password confirmation and optionally a referral code is directed to the UsersController at the create method.  
 Appropriate validations are performed and a successful creation of a new user renders back a structure containing :
-- an authentication token 
-- the user's name
-- in case a referral code was supplied 
-  - the inviter's name 
-  - and the creadit of $10.  
+  - auth_token
+  - user_id
+  - user_name
+  - user_email
 
 Validations are performed on model, database, and controller levels.
 
@@ -121,12 +123,10 @@ The data is passed to the JsonWebToken singleton class that validates and succes
 
 The return structure includes useful data to be used by the caller.
 The content of returned structure:
-- autentication token
-- user's name
-- referral code, if the user has created one
-- a list of users that have been invited by the authenticated user
-- the amount of credit that corresponds to the invited users
-- the amount of $10 credit if the authenticated user has registered using someone's else referral code
+  - auth_token
+  - user_id
+  - user_name
+  - user_email
 
 <br/>
 
@@ -137,6 +137,39 @@ The user is authenticated and a 20 characters length string is generated and ret
 If the user has already created a referral code then a 'You Already Have Created A Referral Code' message is returned.  
 
 <br/>
+
+### Users Index
+
+A call to the *users* route requires the authentication token to be supplied in the header structure of the request.  
+
+An array of all users is returned having each item containing the following fields:
+  - id
+  - name
+  - email
+  - credit
+  - inviter
+  - referral_code
+
+
+<br/>
+
+### User Info
+
+A call to the *user/:id* route requires the authentication token to be supplied in the header structure of the request.  
+
+The following fields are returned:
+  - id
+  - name
+  - email
+  - inviter
+  - credit
+  - referral_code
+  - invited_users: an array of users with each containing
+      - id
+      - name
+      - email
+      - credit
+
 <hr/>
 
 ## Test
@@ -174,9 +207,9 @@ The response can be
 ```
 {
   auth_token: auth_token,
-  user_name: user_name,
-  inviter_name: inviter_name,
-  credit_from_signup: credit_from_signup
+  user_id: id,
+  user_name: name,
+  user_email: email
 }
 ```
 
@@ -232,21 +265,9 @@ The response can be
 ```
 {
   auth_token: auth_token,
-  user_name: user_name,
-  inviter_name: inviter_name,
-  referral: referral_code,
-  invited_users: invited_users,
-  credit_from_referral: credit_from_referral,
-  credit_from_signup: credit_from_signup
-}
-```
-
-Note that the invited_users is an array with each element containing:
-
-```
-{
-  name: user_name,
-  email: user_email
+  user_id: id,
+  user_name: name,
+  user_email: email
 }
 ```
 
@@ -301,6 +322,101 @@ The response can be:
 
 <br/>
 
+### Users Index
+
+A GET request is required with header structure cntaining
+- Authorization
+  
+Note that you have to prefix the authorization token with 'Bearer '  
+i.e. 
+```
+headers: {
+          'Authorization': 'Bearer ' + auth_token
+         }
+```
+<br/>
+
+
+The response can be:
+1. either an array of users with the following JSON structure:
+<br/>
+
+```
+{
+  id: user_id,
+  name: user_name,
+  email: user_email,
+  credit: user_credit,
+  inviter: user_inviter,
+  referral_code: user_referral
+}
+```
+
+<br/>
+
+#### 2. Or the unauthorized message  
+
+```
+{
+  error: 'Not Authorized'
+}
+```
+
+<br/>
+
+### User's Info
+A GET request is required with header structure cntaining
+- Authorization
+  
+Note that you have to prefix the authorization token with 'Bearer '  
+i.e. 
+```
+headers: {
+          'Authorization': 'Bearer ' + auth_token
+         }
+```
+<br/>
+
+
+The response can be:
+1. either the following JSON structure:
+<br/>
+
+```
+{
+  id: user_id,
+  name: user_name,
+  email: user_email,
+  inviter: user_inviter,
+  credit: user_credit,
+  referral_code: user_referral&.code,
+  invited_users: array of the invated users
+}
+```
+
+Note that the invited_users is an array with each element containing:
+
+```
+{
+  id: user_id,
+  name: user_name,
+  email: user_email,
+  credit: user_credit
+}
+```
+
+<br/>
+
+#### 2. Or the unauthorized message  
+
+```
+{
+  error: 'Not Authorized'
+}
+
+<br/>
+
+```
 <br/>
 
 <br/>
@@ -334,7 +450,7 @@ In order to run the API locally,
 4. The solution is simple and well organized. No extra routes, models, controllers are implemented although a real app in production would require further features 
 5. The code is error-resistant and does consider reasonable edge-cases
 6. The API allows a capable front-end developer to build an application. A draft example is implemented and is hosted in github at address https://github.com/ioanniskousis/amitree-interact or 
-<a href="https://ioanniskousis.github.io/amitree-interact/">open the live demo from here</a>. Also can use a <a href="https://ioanniskousis.github.io/amitree-interact?referral_code=cce01187a4764b5f09ee">Sample With Referral Code</a>. An implementation in React also available at https://github.com/ioanniskousis/amitree-react 
+<a href="https://ioanniskousis.github.io/amitree-interact/">open the live demo from here</a>. Also can use a <a href="https://ioanniskousis.github.io/amitree-interact?referral_code=cce01187a4764b5f09ee">Sample With Referral Code</a>.
 
 ** Please note, usually the Heroku is delaying the first call several seconds.
 

@@ -446,8 +446,12 @@ In order to run the API locally,
 3. Automated tests are implemented that validate the functionality works as intended
 4. The solution is simple and well organized. No extra routes, models, controllers are implemented although a real app in production would require further features 
 5. The code is error-resistant and does consider reasonable edge-cases
-6. The API allows a capable front-end developer to build an application. A draft example is implemented and is hosted in github at address https://github.com/ioanniskousis/amitree-interact or 
-<a href="https://ioanniskousis.github.io/amitree-interact/">open the live demo from here</a>. Also can use a <a href="https://ioanniskousis.github.io/amitree-interact?referral_code=5406a28076fb005f1fe7">Sample With Referral Code</a>.
+6. The API allows a capable front-end developer to build an application.
+   - Samples
+     - <a href="https://github.com/ioanniskousis/amitree-interact">A draft example is implemented and is hosted in github</a>
+     - <a href="https://ioanniskousis.github.io/amitree-interact/">Live Demo</a>
+     - <a href="https://ioanniskousis.github.io/amitree-interact?referral_code=5406a28076fb005f1fe7">Live Demo Sample With Referral Code</a>
+     - <a href="https://github.com/ioanniskousis/amitree-react">An implemenration with React</a>
 
 ** Please note, usually the Heroku is delaying the first call several seconds.
 

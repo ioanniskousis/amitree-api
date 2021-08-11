@@ -451,7 +451,7 @@ In order to run the API locally,
      - <a href="https://github.com/ioanniskousis/amitree-interact">A draft example is implemented and is hosted in github</a>
      - <a href="https://ioanniskousis.github.io/amitree-interact/">Live Demo</a>
      - <a href="https://ioanniskousis.github.io/amitree-interact?referral_code=5406a28076fb005f1fe7">Live Demo Sample With Referral Code</a>
-     - <a href="https://github.com/ioanniskousis/amitree-react-draft">An implemenration with React</a>
+     - <a href="https://github.com/ioanniskousis/amitree-react-draft">An implementation with React</a>
 
 ** Please note, usually the Heroku is delaying the first call several seconds.
 
